@@ -53,12 +53,23 @@ class Onesky_Api
             'export' => '/projects/:project_id/translations',
             'status' => '/projects/:project_id/translations/status',
         ),
-        // 'import_tasks'   => array('show'),
-        // 'quotations'     => array('show'),
-        // 'orders'         => array('list', 'show', 'create'),
-        // 'screenshots'    => array('upload'),
-        // 'locales'        => array('list'),
-        // 'project_types'  => array('list'),
+        'import_tasks'   => array(
+            'show' => '/projects/:project_id/import-tasks/:import_id'
+        ),
+        'quotations'     => array(
+            'show' => '/projects/:project_id/quotations'
+        ),
+        'orders'         => array(
+            'list'   => '/projects/:project_id/orders',
+            'show'   => '/projects/:project_id/orders/:order_id',
+            'create' => '/projects/:project_id/orders'
+        ),
+        'locales'        => array(
+            'list' => '/locales'
+        ),
+        'project_types'  => array(
+            'list' => '/project-types'
+        ),
     );
 
     /**
@@ -89,7 +100,7 @@ class Onesky_Api
      * Default curl settings
      */
     protected $_curlSettings = array(
-        CURLOPT_RETURNTRANSFER    => true,
+        CURLOPT_RETURNTRANSFER => true,
     );
 
     public function setApiKey($apiKey)
