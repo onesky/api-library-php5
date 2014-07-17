@@ -3,3 +3,6 @@ CHANGELOG
 
 0.1.0 (2014-01-22)
 + start project
+
+0.1.1 (2014-07-17)
+* add params to request body for DELETE method
