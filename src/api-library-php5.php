@@ -314,6 +314,7 @@ class Onesky_Api
 
             case 'delete':
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
 
                 break;
         }
