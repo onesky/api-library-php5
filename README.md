@@ -59,6 +59,5 @@ Download the [source file](/src/api-library-php5.php) and place it in your appli
 
 ## TODO
 
-- Submit to [Composer](https://getcomposer.org/) for easier integration
 - Test with PHPUnit
 - Implement missing resources according to [Onesky API document](https://github.com/onesky/api-documentation-platform)
