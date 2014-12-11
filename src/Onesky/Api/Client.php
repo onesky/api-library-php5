@@ -212,8 +212,12 @@ class Client
         if (!in_array($action, $this->getActionsByResource($resource)))
             throw new InvalidArgumentException('Invalid resource action');
 
-        // $params = count($params) > 0 ? array_shift($params) : array(); // parameters
-        $params = $this->_normalizeParams($params);
+        // parameters
+        if (count($params) > 0) {
+            $params = $this->_normalizeParams(array_shift($params));
+        } else {
+            $params = array();
+        }
 
         // get request method
         $method = $this->getMethodByAction($action);
@@ -362,16 +366,14 @@ class Client
 
     private function _normalizeParams(array $params)
     {
-        $curlParams = count($params) > 0 ? array_shift($params) : array();
-
         // change boolean value to integer for curl
-        foreach ($curlParams as $key => $value) {
+        foreach ($params as $key => $value) {
             if (is_bool($value)) {
-                $curlParams[$key] = (int)$value;
+                $params[$key] = (int)$value;
             }
         }
 
-        return $curlParams;
+        return $params;
     }
 
 }
