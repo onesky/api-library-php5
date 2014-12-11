@@ -1,5 +1,7 @@
 <?php
 
+namespace Onesky\Api;
+
 /**
  * Onesky API wrapper PHP5 library
  */
@@ -8,7 +10,7 @@ if (!function_exists('curl_init')) {
   throw new Exception('OneSky needs the CURL PHP extension.');
 }
 
-class Onesky_Api
+class Client
 {
     /**
      * Onesky API endpoint
