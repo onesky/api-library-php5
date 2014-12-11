@@ -11,3 +11,6 @@ CHANGELOG
 - composer integration (special thanks to @k3nn7)
   - impose namespace
   - add license
+
+1.0.1 (2014-12-11)
+- fix include parameter with boolean value in request body
