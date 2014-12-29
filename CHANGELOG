@@ -14,3 +14,6 @@ CHANGELOG
 
 1.0.1 (2014-12-11)
 - fix include parameter with boolean value in request body
+
+1.0.2 (2014-12-29)
+- fix deprecated warning of using @ prefix to upload file
