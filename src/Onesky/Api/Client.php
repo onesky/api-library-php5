@@ -105,6 +105,10 @@ class Client
         CURLOPT_RETURNTRANSFER => true,
     );
 
+    protected $_httpHeaders = array(
+        "Onesky-Plugin: php-wrapper",
+    );
+
     public function setApiKey($apiKey)
     {
         $this->_apiKey = $apiKey;
@@ -294,8 +298,11 @@ class Client
         curl_setopt($ch, CURLOPT_URL, $url);
 
         // http header
-        if (!$isMultiPart)
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
+        $requestHeaders = $this->_httpHeaders;
+        if (!$isMultiPart) {
+            $requestHeaders[] = "Content-Type: application/json";
+        }
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $requestHeaders);
 
         // method specific settings
         switch ($method) {
