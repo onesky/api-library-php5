@@ -304,7 +304,14 @@ class Client
 
                 // requst body
                 if ($isMultiPart) {
-                    $params['file'] = '@' . $params['file'];
+                    if (version_compare(PHP_VERSION, '5.5.0') === -1) {
+                        // fallback to old method
+                        $params['file'] = '@' . $params['file'];
+                    } else {
+                        // make use of CURLFile
+                        curl_setopt($ch, CURLOPT_SAFE_UPLOAD, true);
+                        $params['file'] = new \CURLFile($params['file']);
+                    }
                     $postBody = $params;
                 } else {
                     $postBody = json_encode($params);
