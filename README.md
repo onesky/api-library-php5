@@ -54,6 +54,14 @@ $response = $client->files('upload', array(
 ));
 $response = json_decode($response, true);
 
+// export translation
+$response = $client->translations('export', array(
+    'project_id' => 999,
+    'locale'     => 'ja',
+    'source_file_name' => 'string.yml'
+));
+file_put_contents('path/to/file', $response);
+
 // create order
 $response = $client->orders('create', array(
     'project_id' => 999,
