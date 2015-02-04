@@ -56,6 +56,7 @@ class Client
             'status' => '/projects/:project_id/translations/status',
         ),
         'import_tasks'   => array(
+	    'list' => '/projects/:project_id/import-tasks/',
             'show' => '/projects/:project_id/import-tasks/:import_id'
         ),
         'quotations'     => array(
