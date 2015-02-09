@@ -20,3 +20,7 @@ CHANGELOG
 
 1.0.3 (2014-12-30)
 - add custom http header
+
+1.0.4 (2015-02-09)
+- add list import tasks (special thanks to @brandesign)
+- specify namespace
