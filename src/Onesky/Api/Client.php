@@ -7,7 +7,7 @@ namespace Onesky\Api;
  */
 
 if (!function_exists('curl_init')) {
-  throw new Exception('OneSky needs the CURL PHP extension.');
+  throw new \Exception('OneSky needs the CURL PHP extension.');
 }
 
 class Client
@@ -56,6 +56,7 @@ class Client
             'status' => '/projects/:project_id/translations/status',
         ),
         'import_tasks'   => array(
+	    'list' => '/projects/:project_id/import-tasks/',
             'show' => '/projects/:project_id/import-tasks/:import_id'
         ),
         'quotations'     => array(
@@ -209,12 +210,12 @@ class Client
         // is valid resource
         $resource = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $fn_name)); // camelcase to underscore
         if (!in_array($resource, $this->getResources()))
-            throw new BadMethodCallException('Invalid resource');
+            throw new \BadMethodCallException('Invalid resource');
 
         // is valid action
         $action = array_shift($params); // action name
         if (!in_array($action, $this->getActionsByResource($resource)))
-            throw new InvalidArgumentException('Invalid resource action');
+            throw new \InvalidArgumentException('Invalid resource action');
 
         // parameters
         if (count($params) > 0) {
@@ -246,7 +247,7 @@ class Client
     private function _getRequestPath($resource, $action, &$params)
     {
         if (!isset($this->_resources[$resource]) || !isset($this->_resources[$resource][$action]))
-            throw new UnexpectedValueException('Resource path not found');
+            throw new \UnexpectedValueException('Resource path not found');
 
         // get path
         $path = $this->_resources[$resource][$action];
@@ -256,7 +257,7 @@ class Client
         if ($matchCount) {
             foreach ($variables[0] as $index => $placeholder) {
                 if (!isset($params[$variables[1][$index]]))
-                    throw new InvalidArgumentException('Missing parameter: ' . $variables[1][$index]);
+                    throw new \InvalidArgumentException('Missing parameter: ' . $variables[1][$index]);
 
                 $path = str_replace($placeholder, $params[$variables[1][$index]], $path);
                 unset($params[$variables[1][$index]]); // remove parameter from $params
@@ -269,7 +270,7 @@ class Client
     protected function _verifyTokenAndSecret()
     {
         if (empty($this->_apiKey) || empty($this->_secret))
-            throw new UnexpectedValueException('Invalid authenticate data of api key or secret');
+            throw new \UnexpectedValueException('Invalid authenticate data of api key or secret');
     }
 
     /**
@@ -345,7 +346,7 @@ class Client
 
         // error handling
         if ($response === false)
-            throw new UnexpectedValueException(curl_error($ch));
+            throw new \UnexpectedValueException(curl_error($ch));
 
         // close connection
         curl_close($ch);
