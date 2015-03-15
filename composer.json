@@ -1,6 +1,5 @@
 {
     "name": "onesky/api-library-php5",
-    "version": "1.0.3",
     "description": "PHP interface for OneSky Platform API",
     "type": "library",
     "require-dev": {
