@@ -5,11 +5,6 @@ namespace Onesky\Api;
 /**
  * Onesky API wrapper PHP5 library
  */
-
-if (!function_exists('curl_init')) {
-  throw new \Exception('OneSky needs the CURL PHP extension.');
-}
-
 class Client
 {
     /**
@@ -187,11 +182,11 @@ class Client
 
     /**
      * For developers to initial request to Onesky API
-     * 
+     *
      * Example:
      *     $onesky = new Onesky_Api();
      *     $onesky->setApiKey('<api-key>')->setSecret('<api-secret>');
-     *     
+     *
      *     // To list project type
      *     $onesky->projectTypes('list');
      *
@@ -200,7 +195,7 @@ class Client
      *
      *     // To upload string file
      *     $onesky->files('upload', array('project_id' => 1099, 'file' => 'path/to/file.yml', 'file_format' => 'YAML'));
-     * 
+     *
      * @param  string $fn_name Function name acted as resource name
      * @param  array  $params  Parameters passed in request
      * @return array  Response
@@ -275,15 +270,22 @@ class Client
 
     /**
      * Initial request to Onesky API
+     *
      * @param  string  $method
      * @param  string  $path
      * @param  array   $params
      * @param  boolean $isMultiPart
      * @param  boolean $isExportFile
+     *
      * @return array
+     * @throws \Exception
      */
     private function _callApi($method, $path, $params, $isMultiPart)
     {
+        if (!function_exists('curl_init')) {
+            throw new \Exception('OneSky needs the CURL PHP extension.');
+        }
+
         // init session
         $ch = curl_init();
 
