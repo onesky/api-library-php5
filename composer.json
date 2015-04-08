@@ -7,7 +7,9 @@
         "phpunit/phpunit": "4.3.*"
     },
     "autoload": {
-        "psr-0": { "Onesky\\Api\\": "./src" }
+        "psr-4": {
+          "Onesky\\Api\\": "src/Onesky/Api/"
+        }
     },
     "require": {
         "php": ">=5.1.0",
