@@ -15,22 +15,22 @@ class Client
     /**
      * Onesky API endpoint
      */
-    protected $_endpoint = 'https://platform.api.onesky.io/1';
+    protected $endpoint = 'https://platform.api.onesky.io/1';
 
     /**
      * Client authenticate token
      */
-    protected $_apiKey = '';
+    protected $apiKey = '';
 
     /**
      * Client authenticate secret
      */
-    protected $_secret = '';
+    protected $secret = '';
 
     /**
      * Resources with actions
      */
-    protected $_resources = array(
+    protected $resources = array(
         'project_groups' => array(
             'list'      => '/project-groups',
             'show'      => '/project-groups/:project_group_id',
@@ -78,21 +78,21 @@ class Client
     /**
      * Actions to use multipart to upload file
      */
-    protected $_multiPartActions = array(
+    protected $multiPartActions = array(
         'files' => array('upload'),
     );
 
     /**
      * Actions to use multipart to upload file
      */
-    protected $_exportFileActions = array(
+    protected $exportFileActions = array(
         'translations' => array('export'),
     );
 
     /**
      * Methods of actions mapping
      */
-    protected $_methods = array(
+    protected $methods = array(
         // 'get'    => array('list', 'show', 'languages', 'export', 'status'),
         'post'   => array('create', 'upload'),
         'put'    => array('update'),
@@ -102,23 +102,31 @@ class Client
     /**
      * Default curl settings
      */
-    protected $_curlSettings = array(
+    protected $curlSettings = array(
         CURLOPT_RETURNTRANSFER => true,
     );
 
-    protected $_httpHeaders = array(
+    protected $httpHeaders = array(
         "Onesky-Plugin: php-wrapper",
     );
 
+    /**
+     * @param string $apiKey
+     * @return $this
+     */
     public function setApiKey($apiKey)
     {
-        $this->_apiKey = $apiKey;
+        $this->apiKey = $apiKey;
         return $this;
     }
 
+    /**
+     * @param string $secret
+     * @return $this
+     */
     public function setSecret($secret)
     {
-        $this->_secret = $secret;
+        $this->secret = $secret;
         return $this;
     }
 
@@ -128,7 +136,7 @@ class Client
      */
     public function getResources()
     {
-        return array_keys($this->_resources);
+        return array_keys($this->resources);
     }
 
     /**
@@ -138,12 +146,14 @@ class Client
      */
     public function getActionsByResource($resource)
     {
-        if (!isset($this->_resources[$resource]))
+        if (!isset($this->resources[$resource])) {
             return null; // no resource found
+        }
 
         $actions = array();
-        foreach ($this->_resources[$resource] as $action => $path)
+        foreach ($this->resources[$resource] as $action => $path) {
             $actions[] = $action;
+        }
 
         return $actions;
     }
@@ -155,9 +165,10 @@ class Client
      */
     public function getMethodByAction($action)
     {
-        foreach ($this->_methods as $method => $actions) {
-            if (in_array($action, $actions))
+        foreach ($this->methods as $method => $actions) {
+            if (in_array($action, $actions)) {
                 return $method;
+            }
         }
 
         return 'get';
@@ -171,7 +182,7 @@ class Client
      */
     public function isMultiPartAction($resource, $action)
     {
-        return isset($this->_multiPartActions[$resource]) && in_array($action, $this->_multiPartActions[$resource]);
+        return isset($this->multiPartActions[$resource]) && in_array($action, $this->multiPartActions[$resource]);
     }
 
     /**
@@ -182,7 +193,7 @@ class Client
      */
     public function isExportFileAction($resource, $action)
     {
-        return isset($this->_exportFileActions[$resource]) && in_array($action, $this->_exportFileActions[$resource]);
+        return isset($this->exportFileActions[$resource]) && in_array($action, $this->exportFileActions[$resource]);
     }
 
     /**
@@ -209,17 +220,19 @@ class Client
     {
         // is valid resource
         $resource = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $fn_name)); // camelcase to underscore
-        if (!in_array($resource, $this->getResources()))
+        if (!in_array($resource, $this->getResources())) {
             throw new \BadMethodCallException('Invalid resource');
+        }
 
         // is valid action
         $action = array_shift($params); // action name
-        if (!in_array($action, $this->getActionsByResource($resource)))
+        if (!in_array($action, $this->getActionsByResource($resource))) {
             throw new \InvalidArgumentException('Invalid resource action');
+        }
 
         // parameters
         if (count($params) > 0) {
-            $params = $this->_normalizeParams(array_shift($params));
+            $params = $this->normalizeParams(array_shift($params));
         } else {
             $params = array();
         }
@@ -228,13 +241,13 @@ class Client
         $method = $this->getMethodByAction($action);
 
         // get path
-        $path = $this->_getRequestPath($resource, $action, $params);
+        $path = $this->getRequestPath($resource, $action, $params);
 
         // is multi-part
         $isMultiPart = $this->isMultiPartAction($resource, $action);
 
         // return response
-        return $this->_callApi($method, $path, $params, $isMultiPart);
+        return $this->callApi($method, $path, $params, $isMultiPart);
     }
 
     /**
@@ -244,20 +257,22 @@ class Client
      * @param  array  $params   Parameters
      * @return string Request path
      */
-    private function _getRequestPath($resource, $action, &$params)
+    private function getRequestPath($resource, $action, &$params)
     {
-        if (!isset($this->_resources[$resource]) || !isset($this->_resources[$resource][$action]))
+        if (!isset($this->resources[$resource]) || !isset($this->resources[$resource][$action])) {
             throw new \UnexpectedValueException('Resource path not found');
+        }
 
         // get path
-        $path = $this->_resources[$resource][$action];
+        $path = $this->resources[$resource][$action];
 
         // replace variables
         $matchCount = preg_match_all("/:(\w*)/", $path, $variables);
         if ($matchCount) {
             foreach ($variables[0] as $index => $placeholder) {
-                if (!isset($params[$variables[1][$index]]))
+                if (!isset($params[$variables[1][$index]])) {
                     throw new \InvalidArgumentException('Missing parameter: ' . $variables[1][$index]);
+                }
 
                 $path = str_replace($placeholder, $params[$variables[1][$index]], $path);
                 unset($params[$variables[1][$index]]); // remove parameter from $params
@@ -267,10 +282,11 @@ class Client
         return $path;
     }
 
-    protected function _verifyTokenAndSecret()
+    protected function verifyTokenAndSecret()
     {
-        if (empty($this->_apiKey) || empty($this->_secret))
+        if (empty($this->apiKey) || empty($this->secret)) {
             throw new \UnexpectedValueException('Invalid authenticate data of api key or secret');
+        }
     }
 
     /**
@@ -279,27 +295,24 @@ class Client
      * @param  string  $path
      * @param  array   $params
      * @param  boolean $isMultiPart
-     * @param  boolean $isExportFile
      * @return array
      */
-    private function _callApi($method, $path, $params, $isMultiPart)
+    private function callApi($method, $path, $params, $isMultiPart)
     {
         // init session
         $ch = curl_init();
 
         // request settings
-        curl_setopt_array($ch, $this->_curlSettings); // basic settings
+        curl_setopt_array($ch, $this->curlSettings); // basic settings
 
         // url
-        $url = $this->_endpoint . $path;
-        if ($method == 'get') // ['post', 'put', 'delete']
-            $url .= $this->_getAuthQueryStringWithParams($params);
-        else
-            $url .= $this->_getAuthQueryString();
+        $url = $this->endpoint . $path;
+        $url .= $method == 'get' ? $this->getAuthQueryStringWithParams($params) : $this->getAuthQueryString();
+
         curl_setopt($ch, CURLOPT_URL, $url);
 
         // http header
-        $requestHeaders = $this->_httpHeaders;
+        $requestHeaders = $this->httpHeaders;
         if (!$isMultiPart) {
             $requestHeaders[] = "Content-Type: application/json";
         }
@@ -310,7 +323,7 @@ class Client
             case 'post':
                 curl_setopt($ch, CURLOPT_POST, 1);
 
-                // requst body
+                // request body
                 if ($isMultiPart) {
                     if (version_compare(PHP_VERSION, '5.5.0') === -1) {
                         // fallback to old method
@@ -325,19 +338,16 @@ class Client
                     $postBody = json_encode($params);
                 }
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $postBody);
-
                 break;
 
             case 'put':
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
                 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-
                 break;
 
             case 'delete':
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
                 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-
                 break;
         }
 
@@ -345,8 +355,9 @@ class Client
         $response = curl_exec($ch);
 
         // error handling
-        if ($response === false)
+        if ($response === false) {
             throw new \UnexpectedValueException(curl_error($ch));
+        }
 
         // close connection
         curl_close($ch);
@@ -355,31 +366,43 @@ class Client
         return $response;
     }
 
-    private function _getAuthQueryStringWithParams($params)
+    /**
+     * @param $params
+     * @return string
+     */
+    private function getAuthQueryStringWithParams($params)
     {
-        $queryString = $this->_getAuthQueryString();
+        $queryString = $this->getAuthQueryString();
 
-        if (count($params) > 0)
+        if (count($params) > 0) {
             $queryString .= '&' . http_build_query($params);
+        }
 
         return $queryString;
     }
 
-    private function _getAuthQueryString()
+    /**
+     * @return string
+     */
+    private function getAuthQueryString()
     {
-        $this->_verifyTokenAndSecret();
+        $this->verifyTokenAndSecret();
 
         $timestamp = time();
-        $devHash = md5($timestamp . $this->_secret);
+        $devHash = md5($timestamp . $this->secret);
 
-        $queryString  = '?api_key=' . $this->_apiKey;
+        $queryString  = '?api_key=' . $this->apiKey;
         $queryString .= '&timestamp=' . $timestamp;
         $queryString .= '&dev_hash=' . $devHash;
 
         return $queryString;
     }
 
-    private function _normalizeParams(array $params)
+    /**
+     * @param array $params
+     * @return array
+     */
+    private function normalizeParams(array $params)
     {
         // change boolean value to integer for curl
         foreach ($params as $key => $value) {
@@ -390,5 +413,4 @@ class Client
 
         return $params;
     }
-
 }
