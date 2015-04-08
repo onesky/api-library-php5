@@ -9,6 +9,10 @@
     "autoload": {
         "psr-0": { "Onesky\\Api\\": "./src" }
     },
+    "require": {
+        "php": ">=5.1.0",
+        "ext-curl": "*"
+    },
     "license": "MIT",
     "homepage": "https://github.com/onesky/api-library-php5"
 }

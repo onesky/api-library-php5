@@ -5,11 +5,6 @@ namespace Onesky\Api;
 /**
  * Onesky API wrapper PHP5 library
  */
-
-if (!function_exists('curl_init')) {
-  throw new \Exception('OneSky needs the CURL PHP extension.');
-}
-
 class Client
 {
     /**
@@ -109,6 +104,13 @@ class Client
     protected $httpHeaders = array(
         "Onesky-Plugin: php-wrapper",
     );
+
+    public function __construct()
+    {
+        if (!function_exists('curl_init')) {
+            throw new \Exception('OneSky needs the CURL PHP extension.');
+        }
+    }
 
     /**
      * @param string $apiKey
