@@ -15,12 +15,12 @@ class Client
     /**
      * Client authenticate token
      */
-    protected $apiKey = '';
+    protected $apiKey = null;
 
     /**
      * Client authenticate secret
      */
-    protected $secret = '';
+    protected $secret = null;
 
     /**
      * Resources with actions
