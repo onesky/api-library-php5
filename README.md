@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/onesky/api-library-php5.svg)](https://travis-ci.org/onesky/api-library-php5)
+
 # Onesky PHP5 API Library
 
 PHP5 library for OneSky API
