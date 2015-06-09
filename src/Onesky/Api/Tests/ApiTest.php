@@ -6,6 +6,7 @@ use Onesky\Api\Client;
 
 class ApiTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var \Onesky\Api\Client $api */
     protected $api;
 
     public function setUp()
