@@ -79,6 +79,8 @@ $response = json_decode($response, true);
 * [Raise issues or questions](https://github.com/onesky/api-library-php5/issues)
 * [Create Pull Requests](https://github.com/onesky/api-library-php5/pulls)
 
+Or pick one of [the issues](https://github.com/onesky/api-library-php5/issues) and create a PR to solve it.
+
 ## How to run tests
 
 Note: need to install dependencies using [composer](https://getcomposer.org/) to have phpunit.
@@ -86,7 +88,3 @@ Note: need to install dependencies using [composer](https://getcomposer.org/) to
 ```sh
 vendor/bin/phpunit
 ```
-
-## TODO
-
-- Implement missing resources according to [Onesky API document](https://github.com/onesky/api-documentation-platform)
