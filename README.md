@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/onesky/api-library-php5.svg)](https://travis-ci.org/onesky/api-library-php5)
+[![Code Coverage](https://scrutinizer-ci.com/g/onesky/api-library-php5/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/onesky/api-library-php5/?branch=master)
 
 # Onesky PHP5 API Library
 
