@@ -24,3 +24,9 @@ CHANGELOG
 1.0.4 (2015-02-09)
 - add list import tasks (special thanks to @brandesign)
 - specify namespace
+
+1.0.5 (2015-06-09)
+- apply PSR-4 and revise coding style
+- add file format checking
+- setup phpunit
+- activate TravisCI
