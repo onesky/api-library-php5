@@ -74,7 +74,19 @@ $response = $client->orders('create', array(
 $response = json_decode($response, true);
 ```
 
+## How to contribute
+
+* [Raise issues or questions](https://github.com/onesky/api-library-php5/issues)
+* [Create Pull Requests](https://github.com/onesky/api-library-php5/pulls)
+
+## How to run tests
+
+Note: need to install dependencies using [composer](https://getcomposer.org/) to have phpunit.
+
+```sh
+vendor/bin/phpunit
+```
+
 ## TODO
 
-- Test with PHPUnit
 - Implement missing resources according to [Onesky API document](https://github.com/onesky/api-documentation-platform)
