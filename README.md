@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/onesky/api-library-php5.svg)](https://travis-ci.org/onesky/api-library-php5)
+[![Code Coverage](https://scrutinizer-ci.com/g/onesky/api-library-php5/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/onesky/api-library-php5/?branch=master)
 
 # Onesky PHP5 API Library
 
@@ -73,7 +74,17 @@ $response = $client->orders('create', array(
 $response = json_decode($response, true);
 ```
 
-## TODO
+## How to contribute
 
-- Test with PHPUnit
-- Implement missing resources according to [Onesky API document](https://github.com/onesky/api-documentation-platform)
+* [Raise issues or questions](https://github.com/onesky/api-library-php5/issues)
+* [Create Pull Requests](https://github.com/onesky/api-library-php5/pulls)
+
+Or pick one of [the issues](https://github.com/onesky/api-library-php5/issues) and create a PR to solve it.
+
+## How to run tests
+
+Note: need to install dependencies using [composer](https://getcomposer.org/) to have phpunit.
+
+```sh
+vendor/bin/phpunit
+```
