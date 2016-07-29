@@ -99,6 +99,9 @@ class Client
      */
     protected $curlSettings = array(
         CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_SSL_VERIFYPEER => true,
+		CURLOPT_SSL_VERIFYHOST => 2,
+		CURLOPT_CAINFO => __DIR__ . '/cert/GeoTrustGlobalCA.pem'
     );
 
     protected $httpHeaders = array(
