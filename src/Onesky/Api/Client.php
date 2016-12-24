@@ -314,7 +314,7 @@
 			$url .= $method == 'get' ? $this->getAuthQueryStringWithParams($params) : $this->getAuthQueryString();
 
 			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_CAINFO, dirname(__FILE__) . '/cert/GeoTrustGlobalCA.pem');
+			curl_setopt($ch, CURLOPT_CAINFO, dirname(__FILE__) . '/cert/StarfieldServicesRootCertificateAuthority-G2.pem');
 
 			// http header
 			$requestHeaders = $this->httpHeaders;
