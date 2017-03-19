@@ -7,13 +7,13 @@ namespace Onesky\Api;
  */
 
 /**
- * @method string projectGroups(string $action, int $projectGroupId = null) Possible actions: list, show, create, delete, languages
- * @method string project(string $action, int $projectIdOrProjectGroupId = null) Possible actions: list, show, create, delete, languages
- * @method string files(string $action, int $projectId) Possible actions: list, upload, delete
- * @method string translations(string $action, int $projectId) Possible actions: export, status
- * @method string importTasks(string $action, int $projectId, int $importId = null) Possible actions: list, show
- * @method string quotations(string $action, int $projectId) Possible actions: show
- * @method string orders(string $action, int $projectId, int $orderId = null) Possible actions: list, show, create
+ * @method string projectGroups(string $action, array $arrayWithProjectGroupId) Possible actions: list, show, create, delete, languages
+ * @method string project(string $action, array $arrayWithProjectIdOrProjectGroupId = null) Possible actions: list, show, create, delete, languages
+ * @method string files(string $action, array $arrayWithProjectId) Possible actions: list, upload, delete
+ * @method string translations(string $action, array $arrayWithProjectId) Possible actions: export, status
+ * @method string importTasks(string $action, array $arrayWithProjectIdAndOrImportId) Possible actions: list, show
+ * @method string quotations(string $action, array $arrayWithProjectId) Possible actions: show
+ * @method string orders(string $action, array $arrayWithProjectIdAndOrOrderId) Possible actions: list, show, create
  * @method string locales(string $action) Possible actions: list
  * @method string projectTypes(string $action) Possible actions: list
  */
