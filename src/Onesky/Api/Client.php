@@ -5,6 +5,19 @@ namespace Onesky\Api;
 /**
  * Onesky API wrapper PHP5 library
  */
+
+/**
+ * @method string projectGroups(string $action, int $projectGroupId = null) Possible actions: list, show, create, delete, languages
+ * @method string project(string $action, int $projectIdOrProjectGroupId = null) Possible actions: list, show, create, delete, languages
+ * @method string files(string $action, int $projectId) Possible actions: list, upload, delete
+ * @method string translations(string $action, int $projectId) Possible actions: export, status
+ * @method string importTasks(string $action, int $projectId, int $importId = null) Possible actions: list, show
+ * @method string quotations(string $action, int $projectId) Possible actions: show
+ * @method string orders(string $action, int $projectId, int $orderId = null) Possible actions: list, show, create
+ * @method string locales(string $action) Possible actions: list
+ * @method string projectTypes(string $action) Possible actions: list
+ */
+
 class Client
 {
     /**
@@ -51,7 +64,7 @@ class Client
             'status' => '/projects/:project_id/translations/status',
         ),
         'import_tasks'   => array(
-	    'list' => '/projects/:project_id/import-tasks/',
+	        'list' => '/projects/:project_id/import-tasks/',
             'show' => '/projects/:project_id/import-tasks/:import_id'
         ),
         'quotations'     => array(
