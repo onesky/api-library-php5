@@ -1,5 +1,5 @@
 {
-    "name": "onesky/api-library-php5",
+    "name": "frolki1-dev/api-library-php5",
     "description": "PHP interface for OneSky Platform API",
     "type": "library",
     "require-dev": {
