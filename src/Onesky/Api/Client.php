@@ -48,6 +48,7 @@ class Client
         ),
         'translations'   => array(
             'export' => '/projects/:project_id/translations',
+            'multilingual' => '/projects/:project_id/translations/multilingual',
             'status' => '/projects/:project_id/translations/status',
         ),
         'import_tasks'   => array(
