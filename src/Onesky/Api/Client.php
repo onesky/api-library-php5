@@ -95,7 +95,7 @@ class Client
      * Actions to use multipart to upload file
      */
     protected $exportFileActions = array(
-        'translations' => array('export'),
+        'translations' => array('export', 'multilingual',),
     );
 
     /**
