@@ -113,6 +113,8 @@ class Client
      */
     protected $curlSettings = array(
         CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_SSL_VERIFYPEER => true,
+        CURLOPT_SSL_VERIFYHOST => 2
     );
 
     protected $httpHeaders = array(
@@ -326,6 +328,7 @@ class Client
         $url .= $method == 'get' ? $this->getAuthQueryStringWithParams($params) : $this->getAuthQueryString();
 
         curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_CAINFO, dirname(__FILE__) . '/certs/AmazonRootCA1.pem');
 
         // http header
         $requestHeaders = $this->httpHeaders;
